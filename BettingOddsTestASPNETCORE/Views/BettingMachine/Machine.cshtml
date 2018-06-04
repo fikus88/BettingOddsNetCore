@@ -1,0 +1,26 @@
+﻿@model BettingOddsTestASPNETCORE.Interfaces.IMachine
+
+@{
+    ViewData["Title"] = "Testing: " + Model.Name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="left:200px">@Html.ActionLink("Go to machine selection", "Index", "Home")</div>
+<h2>Selected Machine : @Model.Name</h2>
+<h2>Stake : £ @Model.stake</h2>
+<div>
+    <h4> Please type in number of tests you want to run</h4>
+
+    <form asp-action="Machine" asp-controller="BettingMachine">
+        <input id="machineID" name="machineID" hidden type="number" value="@Model.ID" />
+        <input type="number" id="numOfTests" name="numOfTests" />
+        <input type="submit" value="Run Tests" />
+    </form>
+
+    @{
+        if (Model.Results.Count > 0)
+        {
+            Html.RenderPartial("TestResult", Model.ResultString);
+
+        }
+    }
+</div>

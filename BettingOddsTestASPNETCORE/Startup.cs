@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using BettingOddsTestASPNETCORE.Interfaces;
+using BettingOddsTestASPNETCORE.Models;
 
 namespace BettingOddsTestASPNETCORE
 {
@@ -17,6 +19,26 @@ namespace BettingOddsTestASPNETCORE
         }
 
         public IConfiguration Configuration { get; }
+
+        public static List<BettingOddsTestASPNETCORE.Interfaces.IMachine> BettingMachines = SeedBettingMachines();
+
+        private static List<IMachine> SeedBettingMachines()
+        {
+            List<Interfaces.IMachine> BettingMachines = new List<Interfaces.IMachine>();
+
+            BettingMachines.Add(new RouletteType("Black or Red Party", 1));
+            BettingMachines.Add(new DiceType("Dice Roll 2000", 1));
+
+            int ID = 1;
+
+            foreach (IMachine machine in BettingMachines)
+            {
+                machine.ID = ID;
+                ID++;
+            }
+
+            return BettingMachines;
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
